@@ -14,36 +14,40 @@
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h1 class="h4 mb-0">Listagem de Enderecos</h1>
-                            <div class="d-flex align-items-center">
-                                <span class="badge badge-primary badge-pill px-3 py-2 mr-2">
-                                    {{ count($enderecos) }} registro(s)
-                                </span>
-                                <a href="{{ route('adicionar') }}" class="btn btn-sm btn-success">Adicionar</a>
-                            </div>
                         </div>
                         <p class="text-muted mb-4">Lista de todos os enderecos cadastrados.</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <a href="{{ route('adicionar') }}" class="btn btn-success">Adicionar</a>
+                            <span class="badge badge-primary badge-pill px-3 py-2">
+                                {{ count($enderecos) }} registro(s)
+                            </span>
+                        </div>
                         @if(count($enderecos) > 0)
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover table-bordered mb-0">
                                     <thead class="thead-light">
                                         <tr>
+                                            <th class="text-nowrap">ID</th>
                                             <th class="text-nowrap">CEP</th>
                                             <th>Logradouro</th>
                                             <th class="text-nowrap">Numero</th>
                                             <th>Bairro</th>
                                             <th>Cidade</th>
                                             <th class="text-nowrap">UF</th>
+                                            <th class="text-nowrap">Data de registro</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($enderecos as $endereco)
                                             <tr>
+                                                <td>{{ $endereco->id }}</td>
                                                 <td class="text-nowrap">{{ $endereco->cep }}</td>
                                                 <td>{{ $endereco->logradouro }}</td>
                                                 <td>{{ $endereco->numero }}</td>
                                                 <td>{{ $endereco->bairro }}</td>
                                                 <td>{{ $endereco->cidade }}</td>
                                                 <td class="text-uppercase">{{ $endereco->estado }}</td>
+                                                <td class="text-nowrap">{{ optional($endereco->created_at)->format('d/m/Y H:i') }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
