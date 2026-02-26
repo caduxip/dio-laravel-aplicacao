@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Busca de CEP</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-</head>
-<body class="bg-light">
+@extends('layouts.app')
+
+@section('title', !empty($modoEdicao) ? 'Editar Endereco' : 'Adicionar Endereco')
+
+@section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-6">
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4">
-                        <h1 class="h4 mb-2">Adicionar Endereco</h1>
-                        <p class="text-muted mb-4">Preencha os dados abaixo para cadastrar um endereco.</p>
+                        <h1 class="h4 mb-2">{{ !empty($modoEdicao) ? 'Editar Endereco' : 'Adicionar Endereco' }}</h1>
+                        <p class="text-muted mb-4">
+                            {{ !empty($modoEdicao) ? 'Atualize os dados do endereco selecionado.' : 'Preencha os dados abaixo para cadastrar um endereco.' }}
+                        </p>
                         @if($errors->any())
                             <div class="alert alert-danger">
                                 <ul class="mb-0">
@@ -23,8 +21,14 @@
                                 </ul>
                             </div>
                         @endif
-                        <form method="POST" action="{{ route('salvar') }}" novalidate>
+                        @if(session('error'))
+                            <div class="alert alert-danger">{{ session('error') }}</div>
+                        @endif
+                        <form method="POST" action="{{ !empty($modoEdicao) ? route('enderecos.atualizar', ['id' => $id]) : route('salvar') }}" novalidate>
                             @csrf
+                            @if(!empty($modoEdicao))
+                                @method('PUT')
+                            @endif
                             <div class="form-group">
                                 <label for="cep" class="font-weight-bold">CEP</label>
                                 <input
@@ -113,17 +117,23 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">Salvar endereco</button>
+                            <div class="d-flex flex-column flex-md-row">
+                                <a href="{{ route('home') }}" class="btn btn-outline-secondary btn-lg mb-2 mb-md-0 mr-md-2">
+                                    <i class="bi bi-arrow-left"></i>Voltar
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                    <i class="bi {{ !empty($modoEdicao) ? 'bi-check2-circle' : 'bi-save' }}"></i>{{ !empty($modoEdicao) ? 'Atualizar endereco' : 'Salvar endereco' }}
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldmvqV0sA0FfDOMU6z7Sk3qxGn8pY/+bexdFv+5" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6WQ6fZOJ3BCsw2P0p/WeNl13u9I+8R" crossorigin="anonymous"></script>
+@section('scripts')
     <script>
         (function () {
             var cepInput = document.getElementById('cep');
@@ -136,8 +146,6 @@
                 }
                 event.target.value = value;
             });
-
         })();
     </script>
-</body>
-</html>
+@endsection

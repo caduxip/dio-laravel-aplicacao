@@ -17,4 +17,6 @@ Route::get('/', 'EnderecoController@index')->name('home');
 Route::get('/buscar', 'EnderecoController@buscar')->name('buscar');
 Route::post('/salvar', 'EnderecoController@salvar')->name('salvar');
 Route::get('/adicionar', 'EnderecoController@adicionar')->name('adicionar');
-
+Route::get('/enderecos/{id}/editar', 'EnderecoController@editar')->name('enderecos.editar');
+Route::put('/enderecos/{id}', 'EnderecoController@atualizar')->name('enderecos.atualizar');
+Route::delete('/enderecos/{id}', 'EnderecoController@excluir')->name('enderecos.excluir');

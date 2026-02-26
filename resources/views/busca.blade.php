@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Busca de CEP</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-</head>
-<body class="bg-light">
+@extends('layouts.app')
+
+@section('title', 'Busca de CEP')
+
+@section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-6">
@@ -33,17 +29,18 @@
                                 >
                                 <small class="form-text text-muted">Exemplo: 20550-013 (com ou sem hifen).</small>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">Buscar endereco</button>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                <i class="bi bi-search"></i>Buscar endereco
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldmvqV0sA0FfDOMU6z7Sk3qxGn8pY/+bexdFv+5" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6WQ6fZOJ3BCsw2P0p/WeNl13u9I+8R" crossorigin="anonymous"></script>
+@section('scripts')
     <script>
         (function () {
             var cepInput = document.getElementById('cep');
@@ -58,5 +55,4 @@
             });
         })();
     </script>
-</body>
-</html>
+@endsection
